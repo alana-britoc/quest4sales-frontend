@@ -217,3 +217,13 @@ html {
     }
   }
 }
+
+
+.clip-curved {
+  clip-path: path("M0,0 C70,0 120,300 0,600 L100%,600 L100%,0 Z");
+}
+
+.clip-curved-right {
+  clip-path: path("M100%,0 C90%,0 40%,300 100%,600 L0,600 L0,0 Z");
+}
+
