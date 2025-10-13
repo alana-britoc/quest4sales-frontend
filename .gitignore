@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Ficheiros de configuração de ferramentas e editor
+components.json
+settings.json
+
+# Ignorar a pasta de alias gerada incorretamente
+/@/
