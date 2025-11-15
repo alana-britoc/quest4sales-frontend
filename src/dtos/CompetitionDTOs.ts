@@ -1,24 +1,25 @@
 export interface Competition {
-  id: number;
+  id: string;
   name: string;
   description?: string;
   startDate: string;
   endDate: string;
   status: "ACTIVE" | "PENDING" | "FINISHED";
+  createdAt: string;
+  updatedAt: string;
 }
 
-export interface Prize {
-  id: number;
-  competitionId: number;
-  titulo: string;
-  descricao: string;
-  dataFim: string;
-  imageUrl?: string;
-}
-
-export interface PodiumItem {
-  position: number;
+export interface CreateCompetitionRequest {
   name: string;
-  total_points: number;
-  avatar?: string;
+  description?: string;
+  startDate: string;
+  endDate: string;
+}
+
+export interface UpdateCompetitionRequest {
+  name?: string;
+  description?: string;
+  startDate?: string;
+  endDate?: string;
+  status?: "ACTIVE" | "PENDING" | "FINISHED";
 }

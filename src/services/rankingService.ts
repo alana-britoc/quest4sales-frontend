@@ -1,12 +1,15 @@
 import { api } from "@/lib/api";
-import type { RankingResponse } from "@/dtos/RankingDTOs";
+import type { Ranking, RankingResponse } from "@/dtos/RankingDTOs";
 
 export const rankingService = {
-  async getRankingByCompetition(
-    competitionId: number
-  ): Promise<RankingResponse> {
+  async getRankings(): Promise<Ranking[]> {
+    const { data } = await api.get<Ranking[]>("/rankings");
+    return data;
+  },
+
+  async getRankingsByCompetition(competitionId: string): Promise<RankingResponse> {
     const { data } = await api.get<RankingResponse>(
-      `/competitions/${competitionId}/ranking`
+      `/rankings/competition/${competitionId}`
     );
     return data;
   },

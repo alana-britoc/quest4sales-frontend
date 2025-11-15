@@ -1,13 +1,20 @@
-export interface RankingSeller {
+export interface Ranking {
+  id: string;
+  competition: {
+    id: string;
+    name: string;
+  };
+  user: {
+    id: string;
+    username: string;
+    avatarUrl?: string;
+  };
+  totalPoints: number;
   position: number;
-  user_id: number;
-  name: string;
-  total_points: number;
-  avatar?: string;
+  updatedAt: string;
 }
 
 export interface RankingResponse {
-  competicao_id: number;
-  allSellers: RankingSeller[];
-  currentUserPosition?: number;
+  rankings: Ranking[];
+  userRanking?: Ranking;
 }

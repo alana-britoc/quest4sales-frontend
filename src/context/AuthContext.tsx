@@ -7,17 +7,15 @@ import type { UserRole } from "@/dtos/AuthDTOs";
 export type { UserRole };
 
 export type AuthUser = {
-  id: number;
-  name: string;
+  userId: string;
+  username: string;
   email: string;
   role: UserRole;
-  avatar?: string;
-  department?: string;
 };
 
 interface AuthContextType {
   user: AuthUser | null;
-  login: (email: string, password: string) => Promise<void>;
+  login: (username: string, password: string) => Promise<void>;
   logout: () => void;
   isAuthenticated: boolean;
   isLoading: boolean;
@@ -26,7 +24,6 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | null>(null);
 
 const AUTH_TOKEN_KEY = "q4s_auth_token";
-const REFRESH_TOKEN_KEY = "q4s_refresh_token";
 const USER_DATA_KEY = "q4s_user_data";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -45,7 +42,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
       } catch (error) {
         localStorage.removeItem(AUTH_TOKEN_KEY);
-        localStorage.removeItem(REFRESH_TOKEN_KEY);
         localStorage.removeItem(USER_DATA_KEY);
       } finally {
         setIsLoading(false);
@@ -55,23 +51,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     initAuth();
   }, []);
 
-  const login = async (email: string, password: string) => {
+  const login = async (username: string, password: string) => {
     try {
-      const response = await authService.login({ email, password });
+      const response = await authService.login({ username, password });
 
       localStorage.setItem(AUTH_TOKEN_KEY, response.token);
-      localStorage.setItem(REFRESH_TOKEN_KEY, response.refreshToken);
-      localStorage.setItem(USER_DATA_KEY, JSON.stringify(response.user));
 
-      setUser(response.user);
+      const userData: AuthUser = {
+        userId: response.userId,
+        username: response.username,
+        email: response.email,
+        role: response.role,
+      };
+
+      localStorage.setItem(USER_DATA_KEY, JSON.stringify(userData));
+      setUser(userData);
 
       const roleRoutes: Record<UserRole, string> = {
-        VENDEDOR: "/dashboard",
-        GERENTE: "/gerente/dashboard",
+        SELLER: "/dashboard",
+        MANAGER: "/gerente/dashboard",
         ADMIN: "/admin/usuarios",
       };
 
-      navigate(roleRoutes[response.user.role] || "/login");
+      navigate(roleRoutes[response.role] || "/login");
     } catch (error) {
       throw error;
     }
@@ -81,7 +83,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     authService.logout().catch(() => {});
 
     localStorage.removeItem(AUTH_TOKEN_KEY);
-    localStorage.removeItem(REFRESH_TOKEN_KEY);
     localStorage.removeItem(USER_DATA_KEY);
     setUser(null);
     navigate("/login");

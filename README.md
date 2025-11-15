@@ -1,73 +1,78 @@
-# React + TypeScript + Vite
+# Quest4Sales Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Sistema de gamificação para equipes de vendas desenvolvido com React, TypeScript e Vite.
 
-Currently, two official plugins are available:
+## Tela de Login
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![Tela de Login](./src/assets/telalogin.gif)
 
-## React Compiler
+## Tecnologias
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **React** 19.2.0 - Biblioteca para construção de interfaces
+- **TypeScript** 5.9.3 - Superset JavaScript com tipagem estática
+- **Vite** 7.1.9 - Build tool e dev server
+- **TailwindCSS** 3.0.0 - Framework CSS utilitário
+- **React Router** 7.9.4 - Roteamento
+- **React Hook Form** 7.64.0 - Gerenciamento de formulários
+- **TanStack Query** 5.90.2 - Gerenciamento de estado assíncrono
+- **Zod** 4.1.12 - Validação de schemas
+- **Axios** 1.13.2 - Cliente HTTP
+- **Recharts** 2.15.2 - Biblioteca de gráficos
+- **Framer Motion** 12.23.22 - Animações
+- **Radix UI** - Componentes acessíveis
 
-## Expanding the ESLint configuration
+## Requisitos
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Node.js 18+
+- npm ou yarn
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Instalação
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+```bash
+# Clone o repositório
+git clone https://github.com/alana-britoc/quest4sales-frontend.git
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Instale as dependências
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Scripts Disponíveis
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+# Servidor de desenvolvimento
+npm run dev
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Build para produção
+npm run build
+
+# Build para desenvolvimento
+npm run build:dev
+
+# Preview da build de produção
+npm run preview
+
+# Lint do código
+npm run lint
 ```
+
+## Estrutura do Projeto
+
+```
+quest4sales-frontend/
+├── src/
+│   ├── assets/        # Imagens e recursos estáticos
+│   ├── components/    # Componentes React reutilizáveis
+│   ├── pages/         # Páginas da aplicação
+│   ├── services/      # Serviços e APIs
+│   └── ...
+├── public/            # Arquivos públicos
+└── ...
+```
+
+## Desenvolvimento
+
+O projeto utiliza ESLint para garantir a qualidade do código e Tailwind CSS para estilização. Todas as configurações estão prontas para uso.
+
+## Licença
+
+Projeto privado.

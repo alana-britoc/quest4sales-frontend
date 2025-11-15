@@ -1,36 +1,36 @@
 import type { UserRole } from "./AuthDTOs";
 
-export interface UserProfile {
-  id: number;
-  name: string;
+export interface User {
+  id: string;
+  username: string;
   email: string;
-  role: UserRole;
-  avatar?: string;
-  department?: string;
+  firstName?: string;
+  lastName?: string;
+  avatarUrl?: string;
+  roles: Role[];
   createdAt: string;
   updatedAt: string;
 }
 
-export interface UpdateProfileRequest {
-  name?: string;
+export interface Role {
+  id: string;
+  name: string;
+  description: string;
+}
+
+export interface UpdateUserRequest {
+  username?: string;
   email?: string;
-  avatar?: string;
+  firstName?: string;
+  lastName?: string;
+  avatarUrl?: string;
 }
 
-export interface UpdatePasswordRequest {
-  currentPassword: string;
-  newPassword: string;
-}
-
-export interface UserStats {
-  position: number;
-  sales: number;
-  points: number;
-}
-
-export interface UserProgressItem {
-  id: number;
-  label: string;
-  current: number;
-  total: number;
+export interface CreateUserRequest {
+  username: string;
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  roleId?: string;
 }

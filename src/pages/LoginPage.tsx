@@ -47,9 +47,9 @@ const SignInForm = () => {
     try {
       setIsLoading(true);
       setError("");
-      await login(data.email, data.password);
+      await login(data.username, data.password);
     } catch (err: any) {
-      setError(err.response?.data?.message || "Email ou senha inválidos.");
+      setError(err.response?.data?.message || "Username ou senha inválidos.");
     } finally {
       setIsLoading(false);
     }
@@ -71,14 +71,14 @@ const SignInForm = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-4">
           <div>
             <input
-              type="email"
-              placeholder="email@exemplo.com"
-              {...register("email")}
+              type="text"
+              placeholder="Username"
+              {...register("username")}
               disabled={isLoading}
               className="w-full p-3 rounded-md bg-white/20 border border-white/30 placeholder-gray-300 text-white focus:outline-none focus:ring-2 focus:ring-orange-500 disabled:opacity-50"
             />
-            {errors.email && (
-              <p className="text-sm text-red-400 mt-1 text-left">{errors.email.message}</p>
+            {errors.username && (
+              <p className="text-sm text-red-400 mt-1 text-left">{errors.username.message}</p>
             )}
           </div>
           <div>

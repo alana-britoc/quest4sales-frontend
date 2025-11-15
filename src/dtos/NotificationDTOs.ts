@@ -1,17 +1,10 @@
-export type NotificationType = "MUDANCA_POSICAO" | "AVISO" | "PREMIACAO";
+export type NotificationType = "INFO" | "WARNING" | "SUCCESS" | "ERROR";
 
 export interface Notification {
-  id: number;
-  tipo: NotificationType;
-  mensagem: string;
-  lida: boolean;
+  id: string;
+  type: NotificationType;
+  title: string;
+  message: string;
+  isRead: boolean;
   createdAt: string;
-}
-
-export interface MarkNotificationReadRequest {
-  notificationId: number;
-}
-
-export interface ClearAllNotificationsRequest {
-  userId: number;
 }
