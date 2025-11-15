@@ -73,6 +73,4 @@ quest4sales-frontend/
 
 O projeto utiliza ESLint para garantir a qualidade do código e Tailwind CSS para estilização. Todas as configurações estão prontas para uso.
 
-## Licença
 
-Projeto privado.
