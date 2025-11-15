@@ -1,28 +1,46 @@
 import { api } from "@/lib/api";
-import type { Competition, Prize, PodiumItem } from "@/dtos/CompetitionDTOs";
+import type {
+  Competition,
+  CreateCompetitionRequest,
+  UpdateCompetitionRequest,
+} from "@/dtos/CompetitionDTOs";
+import type { Page, PaginationParams } from "@/dtos/PaginationDTOs";
 
 export const competitionService = {
-  async getActiveCompetition(): Promise<Competition> {
-    const { data } = await api.get<Competition>("/competitions/active");
+  async getCompetitions(params?: PaginationParams): Promise<Page<Competition>> {
+    const { data } = await api.get<Page<Competition>>("/competitions", {
+      params,
+    });
     return data;
   },
 
-  async getCompetitionById(id: number): Promise<Competition> {
+  async getCompetitionById(id: string): Promise<Competition> {
     const { data } = await api.get<Competition>(`/competitions/${id}`);
     return data;
   },
 
-  async getCompetitionPrize(competitionId: number): Promise<Prize> {
-    const { data } = await api.get<Prize>(
-      `/competitions/${competitionId}/prize`
+  async createCompetition(
+    competitionData: CreateCompetitionRequest
+  ): Promise<Competition> {
+    const { data } = await api.post<Competition>(
+      "/competitions",
+      competitionData
     );
     return data;
   },
 
-  async getPodium(competitionId: number): Promise<PodiumItem[]> {
-    const { data } = await api.get<PodiumItem[]>(
-      `/competitions/${competitionId}/podium`
+  async updateCompetition(
+    id: string,
+    competitionData: UpdateCompetitionRequest
+  ): Promise<Competition> {
+    const { data } = await api.put<Competition>(
+      `/competitions/${id}`,
+      competitionData
     );
     return data;
+  },
+
+  async deleteCompetition(id: string): Promise<void> {
+    await api.delete(`/competitions/${id}`);
   },
 };

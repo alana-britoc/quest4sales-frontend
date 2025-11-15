@@ -41,10 +41,10 @@ export default function DashboardLayout() {
                 className="flex items-center gap-4 focus:outline-none"
               >
                 <span className="text-sm text-gray-400">
-                  Olá, <strong className="text-white">{user?.name || "Usuário"}</strong>
+                  Olá, <strong className="text-white">{user?.username || "Usuário"}</strong>
                 </span>
                 <img
-                  src={user?.avatar || `https://api.dicebear.com/7.x/bottts-neutral/svg?seed=${user?.name || "User"}`}
+                  src={`https://api.dicebear.com/7.x/bottts-neutral/svg?seed=${user?.username || "User"}`}
                   alt="avatar"
                   className="h-9 w-9 rounded-full bg-gray-700 border-2 border-transparent group-hover:border-purple-500 transition-colors"
                 />

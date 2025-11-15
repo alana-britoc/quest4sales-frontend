@@ -1,28 +1,24 @@
 export interface LoginRequest {
-  email: string;
+  username: string;
   password: string;
 }
 
-export interface LoginResponse {
+export interface RegisterRequest {
+  username: string;
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  roleId?: string;
+}
+
+export interface AuthResponse {
   token: string;
-  refreshToken: string;
-  user: {
-    id: number;
-    name: string;
-    email: string;
-    role: UserRole;
-    avatar?: string;
-    department?: string;
-  };
+  type: string;
+  userId: string;
+  username: string;
+  email: string;
+  role: "ADMIN" | "MANAGER" | "SELLER";
 }
 
-export interface RefreshTokenRequest {
-  refreshToken: string;
-}
-
-export interface RefreshTokenResponse {
-  token: string;
-  refreshToken: string;
-}
-
-export type UserRole = "VENDEDOR" | "GERENTE" | "ADMIN";
+export type UserRole = "ADMIN" | "MANAGER" | "SELLER";

@@ -18,10 +18,10 @@ import { useAuth } from "@/context/AuthContext";
 function RootRedirect() {
   const { user } = useAuth();
 
-  if (user?.role === "VENDEDOR") {
+  if (user?.role === "SELLER") {
     return <Navigate to="/dashboard" replace />;
   }
-  if (user?.role === "GERENTE") {
+  if (user?.role === "MANAGER") {
     return <Navigate to="/gerente/dashboard" replace />;
   }
   if (user?.role === "ADMIN") {
@@ -39,14 +39,14 @@ export function AppRoutes() {
       <Route element={<ProtectedRoute />}>
         <Route path="/" element={<RootRedirect />} />
 
-        <Route element={<RoleBasedGuard allowedRoles={["VENDEDOR"]} />}>
+        <Route element={<RoleBasedGuard allowedRoles={["SELLER"]} />}>
           <Route element={<VendedorLayout />}>
             <Route path="dashboard" element={<DashboardPage />} />
             <Route path="perfil" element={<ProfilePage />} />
           </Route>
         </Route>
 
-        <Route element={<RoleBasedGuard allowedRoles={["GERENTE"]} />}>
+        <Route element={<RoleBasedGuard allowedRoles={["MANAGER"]} />}>
           <Route element={<GerenteLayout />}>
             <Route path="gerente/dashboard" element={<GerenteDashboardPage />} />
           </Route>

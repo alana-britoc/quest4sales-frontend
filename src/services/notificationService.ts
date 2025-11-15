@@ -7,15 +7,17 @@ export const notificationService = {
     return data;
   },
 
-  async markAsRead(notificationId: number): Promise<void> {
-    await api.put(`/notifications/${notificationId}/read`);
+  async getNotificationById(id: string): Promise<Notification> {
+    const { data } = await api.get<Notification>(`/notifications/${id}`);
+    return data;
   },
 
-  async markAllAsRead(): Promise<void> {
-    await api.put("/notifications/read-all");
+  async getUnreadNotifications(): Promise<Notification[]> {
+    const { data } = await api.get<Notification[]>("/notifications/unread");
+    return data;
   },
 
-  async clearAll(): Promise<void> {
-    await api.delete("/notifications");
+  async markAsRead(notificationId: string): Promise<void> {
+    await api.patch(`/notifications/${notificationId}/read`);
   },
 };

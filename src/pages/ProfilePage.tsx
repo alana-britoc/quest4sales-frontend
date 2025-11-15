@@ -286,7 +286,7 @@ export default function ProfilePage() {
             </h3>
             <div className="space-y-6">
               <div className="space-y-5">
-                {mockProgressData.map((progress, index) => {
+                {mockProgressData.map((progress) => {
                   const percentage = (progress.current / progress.total) * 100;
                   return (
                     <div key={progress.id}>

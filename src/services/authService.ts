@@ -1,28 +1,25 @@
 import { api } from "@/lib/api";
 import type {
   LoginRequest,
-  LoginResponse,
-  RefreshTokenRequest,
-  RefreshTokenResponse,
+  RegisterRequest,
+  AuthResponse,
 } from "@/dtos/AuthDTOs";
 
 export const authService = {
-  async login(credentials: LoginRequest): Promise<LoginResponse> {
-    const { data } = await api.post<LoginResponse>("/auth/login", credentials);
+  async login(credentials: LoginRequest): Promise<AuthResponse> {
+    const { data } = await api.post<AuthResponse>("/auth/login", credentials);
     return data;
   },
 
-  async refreshToken(
-    request: RefreshTokenRequest
-  ): Promise<RefreshTokenResponse> {
-    const { data } = await api.post<RefreshTokenResponse>(
-      "/auth/refresh",
-      request
-    );
+  async register(userData: RegisterRequest): Promise<AuthResponse> {
+    const { data } = await api.post<AuthResponse>("/auth/register", userData);
     return data;
   },
 
   async logout(): Promise<void> {
-    await api.post("/auth/logout");
+    try {
+      await api.post("/auth/logout");
+    } catch (error) {
+    }
   },
 };
