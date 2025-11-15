@@ -1,5 +1,5 @@
 import { Sidebar } from "./ui/sidebar";
-import { Home, BarChart2, User } from "lucide-react";
+import { Home, User } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
 export function AppSidebar() {
@@ -11,7 +11,7 @@ export function AppSidebar() {
             <span className="text-2xl font-light text-purple-400">Quest</span>
             <span className="text-2xl font-bold text-fuchsia-500">4</span>
             <span className="text-2xl font-light text-orange-500">sales</span>
-        </div>
+          </div>
         </div>
         <nav className="flex-1 p-4 space-y-2">
           <NavLink
@@ -29,7 +29,7 @@ export function AppSidebar() {
             Dashboard
           </NavLink>
           <NavLink
-            to="/dashboard/perfil"
+            to="/perfil"
             className={({ isActive }) =>
               `flex items-center gap-3 px-4 py-2 rounded-lg transition-colors duration-200 ${
                 isActive

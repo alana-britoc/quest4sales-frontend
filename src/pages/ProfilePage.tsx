@@ -1,182 +1,378 @@
-import React from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { User, Edit2, Target, Award, Star, Crown, Flame, Zap } from "lucide-react";
+import {
+  User,
+  Edit2,
+  Target,
+  Award,
+  Star,
+  Crown,
+  Flame,
+  Zap,
+  Lock,
+} from "lucide-react";
 
 const mockUserData = {
   name: "João Santos",
   email: "joao.santos@empresa.pt",
   department: "Vendas - Região Norte",
-  avatarSeed: "Joao Santos",
   avatarFallback: "JS",
 };
 
 const mockStatsData = {
-  position: 1,
+  position: 6,
   sales: 45,
-  points: 2890,
+  points: 3478,
 };
 
 const mockProgressData = [
   { id: 1, label: "Vendas do Mês", current: 45, total: 50 },
   { id: 2, label: "Meta Trimestral", current: 127, total: 150 },
-  { id: 3, label: "Pontos para Próximo Nível", current: 2890, total: 3500 },
+  { id: 3, label: "Pontos para Próximo Nível", current: 3478, total: 3500 },
 ];
 
 const mockAchievementsData = [
-  { id: 1, icon: Crown, title: "Rei das Vendas", desc: "1º lugar do mês", unlocked: true },
-  { id: 2, icon: Flame, title: "Em Chamas", desc: "5 vendas seguidas", unlocked: true },
-  { id: 3, icon: Star, title: "Estrela Nascente", desc: "Meta mensal atingida", unlocked: true },
-  { id: 4, icon: Zap, title: "Vendedor Relâmpago", desc: "10 vendas em 1 dia", unlocked: false },
+  {
+    id: 1,
+    icon: Crown,
+    title: "Rei das Vendas",
+    desc: "1º lugar do mês",
+    unlocked: true,
+  },
+  {
+    id: 2,
+    icon: Flame,
+    title: "Em Chamas",
+    desc: "5 vendas seguidas",
+    unlocked: true,
+  },
+  {
+    id: 3,
+    icon: Star,
+    title: "Estrela Nascente",
+    desc: "Meta mensal atingida",
+    unlocked: true,
+  },
+  {
+    id: 4,
+    icon: Zap,
+    title: "Vendedor Relâmpago",
+    desc: "10 vendas em 1 dia",
+    unlocked: false,
+  },
+  {
+    id: 5,
+    icon: Target,
+    title: "Mestre das Metas",
+    desc: "Bateu a meta trimestral",
+    unlocked: false,
+  },
+  {
+    id: 6,
+    icon: Award,
+    title: "Novato do Ano",
+    desc: "Top 10 no primeiro mês",
+    unlocked: false,
+  },
 ];
 
-const Perfil = () => {
+const getInitials = (name: string) => {
+  const names = name.split(" ");
+  if (names.length === 1) {
+    return name[0]?.toUpperCase() || "";
+  }
+  return `${names[0][0]}${names[names.length - 1][0]}`.toUpperCase();
+};
+
+function UserAvatar({
+  name,
+  className,
+}: {
+  name: string;
+  className?: string;
+}) {
+  const initials = getInitials(name);
   return (
-    <motion.div 
-      className="grid grid-cols-1 lg:grid-cols-2 gap-8 animate-fade-in"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
+    <div
+      className={`flex items-center justify-center rounded-full bg-gradient-to-br from-purple-600 to-blue-700 ${className}`}
     >
-      <div className="flex flex-col">
-        <Card className="bg-[#1F1F2B] border border-white/10 h-full">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-[#ff9d00] [text-shadow:0_0_5px_#ff9d00]">
-              <User className="h-5 w-5" />
-              Informações Pessoais
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="flex flex-col items-center gap-4 pt-4">
-              <motion.div
-                animate={{
-                  boxShadow: [
-                    "0 0 15px #ff9d00",
-                    "0 0 25px #ff9d00",
-                    "0 0 15px #ff9d00",
-                  ],
-                }}
-                transition={{
-                  duration: 2.5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                className="rounded-full"
-              >
-                <Avatar className="h-24 w-24 border-4 border-[#ff9d00]">
-                  <AvatarImage src={`https://api.dicebear.com/7.x/bottts-neutral/svg?seed=${mockUserData.avatarSeed}`} alt="User avatar" />
-                  <AvatarFallback className="bg-gradient-to-br from-[#a855f7] to-[#f4a351] text-white text-2xl font-bold">
-                    {mockUserData.avatarFallback}
-                  </AvatarFallback>
-                </Avatar>
-              </motion.div>
-              <Button variant="outline" size="sm" className="bg-transparent border-white/20 text-gray-300 hover:bg-white/10 hover:text-white">
-                <Edit2 className="h-4 w-4 mr-2" />
-                Alterar Foto
-              </Button>
-            </div>
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="name" className="text-gray-400">Nome Completo</Label>
-                <Input id="name" defaultValue={mockUserData.name} className="bg-gray-900/50 border-white/10 text-white" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="email" className="text-gray-400">Email</Label>
-                <Input id="email" type="email" defaultValue={mockUserData.email} className="bg-gray-900/50 border-white/10 text-white" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="department" className="text-gray-400">Departamento</Label>
-                <Input id="department" defaultValue={mockUserData.department} disabled className="bg-gray-900/50 border-white/10 disabled:opacity-60" />
-              </div>
-              <Button className="w-full bg-gradient-to-r from-[#a855f7] to-[#f4a351] text-white font-bold hover:opacity-90 transition-opacity">
-                Guardar Alterações
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+      <span className="font-bold text-white">{initials}</span>
+    </div>
+  );
+}
+
+function ProfileTabs() {
+  const [activeTab, setActiveTab] = useState("perfil");
+
+  return (
+    <div>
+      <div className="flex border-b border-white/10 mb-6">
+        <button
+          onClick={() => setActiveTab("perfil")}
+          className={`flex items-center gap-2 py-3 px-4 text-sm font-semibold transition-all ${
+            activeTab === "perfil"
+              ? "text-purple-400 border-b-2 border-purple-400"
+              : "text-gray-400 hover:text-white"
+          }`}
+        >
+          <User className="w-4 h-4" />
+          Perfil
+        </button>
+        <button
+          onClick={() => setActiveTab("senha")}
+          className={`flex items-center gap-2 py-3 px-4 text-sm font-semibold transition-all ${
+            activeTab === "senha"
+              ? "text-purple-400 border-b-2 border-purple-400"
+              : "text-gray-400 hover:text-white"
+          }`}
+        >
+          <Lock className="w-4 h-4" />
+          Senha
+        </button>
       </div>
 
-      <div className="space-y-8">
-        <Card className="bg-[#1F1F2B] border border-white/10">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-[#ff9d00] [text-shadow:0_0_5px_#ff9d00]">
-              <Target className="h-5 w-5" />
-              Progresso e Objetivos
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
+      <div>
+        {activeTab === "perfil" && (
+          <motion.div
+            key="perfil"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="space-y-6"
+          >
+            <div className="flex flex-col items-center gap-4">
+              <UserAvatar name={mockUserData.name} className="h-24 w-24 text-4xl" />
+              <button className="flex items-center justify-center text-sm text-purple-400 font-semibold hover:text-purple-300 transition-colors">
+                <Edit2 className="h-4 w-4 mr-2" />
+                Alterar Foto
+              </button>
+            </div>
             <div className="space-y-4">
-              {mockProgressData.map((progress, index) => {
-                const percentage = (progress.current / progress.total) * 100;
-                return (
-                  <div key={progress.id}>
-                    <div className="flex justify-between mb-1">
-                      <span className="text-sm font-medium text-gray-300">{progress.label}</span>
-                      <span className="text-sm font-medium text-gray-400">{progress.current} / {progress.total}</span>
-                    </div>
-                    <div className="w-full bg-gray-700/50 rounded-full h-2.5">
-                      <motion.div 
-                        className="bg-gradient-to-r from-[#a855f7] to-[#f4a351] h-2.5 rounded-full" 
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${percentage}%` }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1.5, ease: "easeOut", delay: index * 0.2 }}
+              <div className="space-y-2">
+                <label htmlFor="name" className="text-sm font-medium text-gray-400">
+                  Nome Completo
+                </label>
+                <input
+                  id="name"
+                  defaultValue={mockUserData.name}
+                  className="w-full p-3 rounded-md bg-white/5 border border-white/20 placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="email" className="text-sm font-medium text-gray-400">
+                  Email
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  defaultValue={mockUserData.email}
+                  className="w-full p-3 rounded-md bg-white/5 border border-white/20 placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
+              <div className="space-y-2">
+                <label
+                  htmlFor="department"
+                  className="text-sm font-medium text-gray-400"
+                >
+                  Departamento
+                </label>
+                <input
+                  id="department"
+                  defaultValue={mockUserData.department}
+                  disabled
+                  className="w-full p-3 rounded-md bg-gray-800/60 border border-white/10 text-gray-400 disabled:opacity-70"
+                />
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {activeTab === "senha" && (
+          <motion.div
+            key="senha"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="space-y-4"
+          >
+            <div className="space-y-2">
+              <label
+                htmlFor="currentPassword"
+                className="text-sm font-medium text-gray-400"
+              >
+                Senha Atual
+              </label>
+              <input
+                id="currentPassword"
+                type="password"
+                className="w-full p-3 rounded-md bg-white/5 border border-white/20 placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+              />
+            </div>
+            <div className="space-y-2">
+              <label
+                htmlFor="newPassword"
+                className="text-sm font-medium text-gray-400"
+              >
+                Nova Senha
+              </label>
+              <input
+                id="newPassword"
+                type="password"
+                className="w-full p-3 rounded-md bg-white/5 border border-white/20 placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+              />
+            </div>
+            <div className="space-y-2">
+              <label
+                htmlFor="confirmPassword"
+                className="text-sm font-medium text-gray-400"
+              >
+                Confirmar Nova Senha
+              </label>
+              <input
+                id="confirmPassword"
+                type="password"
+                className="w-full p-3 rounded-md bg-white/5 border border-white/20 placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+              />
+            </div>
+          </motion.div>
+        )}
+
+        <div className="pt-6 border-t border-white/10">
+          <button className="w-full bg-purple-600 text-white font-bold py-3 px-4 rounded-md hover:bg-purple-700 transition-colors">
+            Guardar Alterações
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ProgressBar({
+  progress,
+  colorClass = "bg-purple-500",
+}: {
+  progress: number;
+  colorClass?: string;
+}) {
+  return (
+    <div className="w-full bg-gray-700/50 rounded-full h-2.5 overflow-hidden">
+      <motion.div
+        className={`h-2.5 rounded-full ${colorClass}`}
+        initial={{ width: 0 }}
+        whileInView={{ width: `${progress}%` }}
+        viewport={{ once: true }}
+        transition={{ duration: 1.5, ease: "easeOut" }}
+      />
+    </div>
+  );
+}
+
+export default function ProfilePage() {
+  return (
+    <div className="w-full font-poppins">
+      <motion.div
+        className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto p-6"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex flex-col p-6 rounded-2xl border border-white/10 shadow-[0_0_15px_rgba(108,34,217,0.2)] bg-[#1F1F2B]">
+          <ProfileTabs />
+        </div>
+
+        <div className="space-y-8">
+          <div className="p-6 rounded-2xl border border-white/10 shadow-[0_0_15px_rgba(108,34,217,0.2)] bg-[#1F1F2B]">
+            <h3 className="flex items-center gap-2 text-lg font-bold text-gray-100 mb-6">
+              <Target className="h-5 w-5 text-purple-400" />
+              Progresso e Objetivos
+            </h3>
+            <div className="space-y-6">
+              <div className="space-y-5">
+                {mockProgressData.map((progress, index) => {
+                  const percentage = (progress.current / progress.total) * 100;
+                  return (
+                    <div key={progress.id}>
+                      <div className="flex justify-between mb-2">
+                        <span className="text-sm font-medium text-gray-300">
+                          {progress.label}
+                        </span>
+                        <span className="text-sm font-medium text-gray-400">
+                          {progress.current} / {progress.total}
+                        </span>
+                      </div>
+                      <ProgressBar
+                        progress={percentage}
+                        colorClass="bg-gradient-to-r from-purple-500 to-fuchsia-500"
                       />
                     </div>
+                  );
+                })}
+              </div>
+              <div className="pt-6 border-t border-white/10">
+                <div className="grid grid-cols-3 gap-4 text-center">
+                  <div>
+                    <p className="text-3xl font-bold text-purple-400">
+                      {mockStatsData.position}º
+                    </p>
+                    <p className="text-xs text-gray-400">Posição</p>
                   </div>
-                )
-              })}
-            </div>
-            <div className="pt-6 border-t border-white/10">
-              <div className="grid grid-cols-3 gap-4 text-center">
-                <div>
-                  <p className="text-3xl font-bold text-[#ff9d00] [text-shadow:0_0_5px_#ff9d00]">{mockStatsData.position}º</p>
-                  <p className="text-xs text-gray-400">Posição</p>
-                </div>
-                <div>
-                  <p className="text-3xl font-bold text-gray-100">{mockStatsData.sales}</p>
-                  <p className="text-xs text-gray-400">Vendas</p>
-                </div>
-                <div>
-                  <p className="text-3xl font-bold bg-gradient-to-r from-[#a855f7] to-[#f4a351] bg-clip-text text-transparent">{mockStatsData.points}</p>
-                  <p className="text-xs text-gray-400">Pontos</p>
+                  <div>
+                    <p className="text-3xl font-bold text-gray-100">
+                      {mockStatsData.sales}
+                    </p>
+                    <p className="text-xs text-gray-400">Vendas</p>
+                  </div>
+                  <div>
+                    <p className="text-3xl font-bold text-gray-100">
+                      {mockStatsData.points}
+                    </p>
+                    <p className="text-xs text-gray-400">Pontos</p>
+                  </div>
                 </div>
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
 
-        <Card className="bg-[#1F1F2B] border border-white/10">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-[#ff9d00] [text-shadow:0_0_5px_#ff9d00]">
-              <Award className="h-5 w-5" />
+          <div className="p-6 rounded-2xl border border-white/10 shadow-[0_0_15px_rgba(108,34,217,0.2)] bg-[#1F1F2B]">
+            <h3 className="flex items-center gap-2 text-lg font-bold text-gray-100 mb-6">
+              <Award className="h-5 w-5 text-purple-400" />
               Minhas Conquistas
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
+            </h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
               {mockAchievementsData.map((badge) => (
                 <motion.div
                   key={badge.id}
-                  whileHover={{ scale: 1.05, y: -5, rotateZ: 2 }}
+                  whileHover={{ scale: 1.05, y: -5 }}
                   transition={{ type: "spring", stiffness: 300 }}
-                  className={`p-4 rounded-lg flex flex-col items-center justify-center text-center ${badge.unlocked ? 'bg-gradient-to-br from-[#a855f7] to-[#f4a351]' : 'bg-gray-800/60'}`}
+                  className={`p-4 rounded-lg flex flex-col items-center justify-center text-center transition-all ${
+                    badge.unlocked
+                      ? "bg-gradient-to-br from-purple-600 to-fuchsia-600 shadow-lg"
+                      : "bg-gray-800/60"
+                  }`}
                 >
-                  <badge.icon className={`h-8 w-8 mb-2 ${badge.unlocked ? 'text-white' : 'text-gray-500'}`} />
-                  <p className={`font-bold text-sm ${badge.unlocked ? 'text-white' : 'text-gray-400'}`}>{badge.title}</p>
-                  <p className={`text-xs ${badge.unlocked ? 'text-white/80' : 'text-gray-500'}`}>{badge.desc}</p>
+                  <badge.icon
+                    className={`h-10 w-10 mb-2 ${
+                      badge.unlocked ? "text-white" : "text-gray-500 opacity-70"
+                    }`}
+                  />
+                  <p
+                    className={`font-bold text-sm ${
+                      badge.unlocked ? "text-white" : "text-gray-400"
+                    }`}
+                  >
+                    {badge.title}
+                  </p>
+                  <p
+                    className={`text-xs ${
+                      badge.unlocked ? "text-white/80" : "text-gray-500"
+                    }`}
+                  >
+                    {badge.desc}
+                  </p>
                 </motion.div>
               ))}
             </div>
-          </CardContent>
-        </Card>
-      </div>
-    </motion.div>
+          </div>
+        </div>
+      </motion.div>
+    </div>
   );
-};
-
-export default Perfil;
+}
