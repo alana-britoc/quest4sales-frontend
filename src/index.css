@@ -28,16 +28,21 @@
   * {
     @apply border-border;
     scrollbar-width: thin;
-    scrollbar-color: hsl(var(--muted)) hsl(var(--background));
+    scrollbar-color: hsl(var(--muted)) #101015;
   }
 
-  body {
+  html,
+  body,
+  #root {
     @apply text-foreground;
-    background: linear-gradient(-45deg, #0e0ede, #1a1a2e, #de5608, #101015);
-    background-size: 400% 400%;
-    animation: slow-gradient 25s ease infinite;
+    background-color: #101015;
+    background-attachment: fixed;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  .font-poppins {
+    font-family: 'Poppins', sans-serif;
   }
 
   ::-webkit-scrollbar {
@@ -52,23 +57,11 @@
   ::-webkit-scrollbar-thumb {
     background-color: hsl(var(--muted));
     border-radius: 20px;
-    border: 2px solid #121219;
+    border: 2px solid #101015;
   }
 
   ::-webkit-scrollbar-thumb:hover {
     background-color: hsl(var(--accent));
-  }
-}
-
-@keyframes slow-gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
   }
 }
 
@@ -96,23 +89,4 @@
   );
   animation: shimmer 5s infinite linear;
   opacity: 0.7;
-}
-
-.clip-curved {
-  clip-path: path("M0,0 C70,0 120,300 0,600 L100%,600 L100%,0 Z");
-}
-
-.clip-curved-right {
-  clip-path: path("M100%,0 C90%,0 40%,300 100%,600 L0,600 L0,0 Z");
-}
-
-#root, .app {
-  background-color: transparent;
-}
-html, body, #root, .app {
-  background: linear-gradient(-45deg,#44234e, #371c40, #1f1f3b, #1F1F2B, #101015);
-  background-size: 400% 400%;
-  animation: slow-gradient 15s ease infinite;
-  background-attachment: fixed;
-  background-color: transparent !important;
 }

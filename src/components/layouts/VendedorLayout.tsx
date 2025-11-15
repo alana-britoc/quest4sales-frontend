@@ -1,17 +1,18 @@
 import { useState, useRef, useEffect } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { SidebarProvider, SidebarInset } from "../ui/sidebar";
 import { AppSidebar } from "../AppSidebar";
 import { LogOut } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
 
 export default function DashboardLayout() {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const navigate = useNavigate();
+  const { logout, user } = useAuth();
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleLogout = () => {
     setDropdownOpen(false);
-    navigate('/login');
+    logout();
   };
 
   useEffect(() => {
@@ -40,10 +41,10 @@ export default function DashboardLayout() {
                 className="flex items-center gap-4 focus:outline-none"
               >
                 <span className="text-sm text-gray-400">
-                  Olá, <strong className="text-white">Usuário</strong>
+                  Olá, <strong className="text-white">{user?.name || "Usuário"}</strong>
                 </span>
                 <img
-                  src="https://api.dicebear.com/7.x/bottts-neutral/svg?seed=User"
+                  src={user?.avatar || `https://api.dicebear.com/7.x/bottts-neutral/svg?seed=${user?.name || "User"}`}
                   alt="avatar"
                   className="h-9 w-9 rounded-full bg-gray-700 border-2 border-transparent group-hover:border-purple-500 transition-colors"
                 />
