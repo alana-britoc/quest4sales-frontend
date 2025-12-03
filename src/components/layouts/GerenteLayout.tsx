@@ -21,9 +21,12 @@ export default function GerenteLayout() {
       <aside className="w-64 flex-shrink-0 bg-gray-800 border-r border-gray-700">
         <div className="flex flex-col h-full">
           <div className="flex items-center justify-center h-16 border-b border-gray-700">
-            <span className="text-2xl font-bold text-white">
-              Q4S - GERENTE
-            </span>
+            <div className="flex items-baseline">
+              <span className="text-2xl font-light text-purple-400">Q</span>
+              <span className="text-2xl font-bold text-fuchsia-500">4</span>
+              <span className="text-2xl font-light text-orange-500">S</span>
+              <span className="ml-2 text-sm font-medium text-gray-400"> - GERENTE</span>
+            </div>
           </div>
           <nav className="flex-1 p-4 space-y-2">
             {navItems.map((item) => (
@@ -47,7 +50,7 @@ export default function GerenteLayout() {
       <div className="flex-1 flex flex-col">
         <header className="flex items-center justify-between h-16 px-6 bg-gray-800 border-b border-gray-700">
           <div className="text-sm">
-            Logado como: <span className="font-bold">{user?.name}</span> (Gerente)
+            Logado como: <span className="font-bold">{user?.username}</span> (Gerente)
           </div>
           <button
             onClick={logout}
