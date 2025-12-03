@@ -1,5 +1,5 @@
 import { type LucideIcon } from "lucide-react";
-import { Card } from "../components/ui/card";
+import { Card } from "@/components/ui/card";
 
 interface AchievementBadgeProps {
   icon: LucideIcon;
