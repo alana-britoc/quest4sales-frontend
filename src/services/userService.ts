@@ -36,4 +36,14 @@ export const userService = {
   async deleteUser(id: string): Promise<void> {
     await api.delete(`/users/${id}`);
   },
+
+  async getMyProfile(): Promise<User> {
+    const { data } = await api.get<User>("/users/me");
+    return data;
+  },
+
+  async updateMyProfile(userData: UpdateUserRequest): Promise<User> {
+    const { data } = await api.put<User>("/users/me", userData);
+    return data;
+  },
 };
