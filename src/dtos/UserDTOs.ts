@@ -1,5 +1,3 @@
-import type { UserRole } from "./AuthDTOs";
-
 export interface User {
   id: string;
   username: string;

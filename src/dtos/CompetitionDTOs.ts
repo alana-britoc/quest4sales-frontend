@@ -1,10 +1,12 @@
+export type CompetitionStatus = "PLANEJADA" | "ATIVA" | "ENCERRADA" | "CANCELADA";
+
 export interface Competition {
   id: string;
   name: string;
   description?: string;
   startDate: string;
   endDate: string;
-  status: "ACTIVE" | "PENDING" | "FINISHED";
+  status: CompetitionStatus;
   createdAt: string;
   updatedAt: string;
 }
@@ -14,6 +16,7 @@ export interface CreateCompetitionRequest {
   description?: string;
   startDate: string;
   endDate: string;
+  status?: CompetitionStatus;
 }
 
 export interface UpdateCompetitionRequest {
@@ -21,5 +24,5 @@ export interface UpdateCompetitionRequest {
   description?: string;
   startDate?: string;
   endDate?: string;
-  status?: "ACTIVE" | "PENDING" | "FINISHED";
+  status?: CompetitionStatus;
 }
