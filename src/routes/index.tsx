@@ -13,6 +13,8 @@ import NotFound from "@/pages/NotFound";
 
 import ManageUsersPage from "@/pages/admin/ManageUsersPage";
 import GerenteDashboardPage from "@/pages/gerente/GerenteDashboardPage";
+import CompeticoesPage from "@/pages/gerente/CompeticoesPage";
+import EquipePage from "@/pages/gerente/EquipePage";
 import { useAuth } from "@/context/AuthContext";
 
 function RootRedirect() {
@@ -49,6 +51,8 @@ export function AppRoutes() {
         <Route element={<RoleBasedGuard allowedRoles={["MANAGER"]} />}>
           <Route element={<GerenteLayout />}>
             <Route path="gerente/dashboard" element={<GerenteDashboardPage />} />
+            <Route path="gerente/competicoes" element={<CompeticoesPage />} />
+            <Route path="gerente/equipe" element={<EquipePage />} />
           </Route>
         </Route>
 
